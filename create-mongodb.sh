@@ -9,7 +9,7 @@ docker run --net=host --name mongo-${HOSTNAME} \
 -v /etc/mongo-files:/opt/keyfile \
 -v /etc/localtime:/etc/localtime:ro \
 -p 27017:27017 \
--d mongo \
+-d mongo:2.6.5 \
 --smallfiles \
 --keyFile /opt/keyfile/mongodb-keyfile \
 --replSet "rs0"
