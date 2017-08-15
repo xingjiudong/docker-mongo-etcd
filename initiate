@@ -1,15 +1,12 @@
 #!/bin/bash
-set -e
 
 source ./env.config
 
-docker-compose ${COMPOSE_OPT} $@
+docker-compose -H :9999 up -d 
 
 docker-compose -H :9999 exec mongors1n1 bash -c "echo 'rs.initiate();sleep(1000);' | mongo admin"
 docker-compose -H :9999 exec mongors1n1 bash -c "echo 'db.createUser({user: \"siteRootAdmin\", pwd: \"password\", roles: [ { role: \"root\", db: \"admin\" } ] });' | mongo admin"
 
-for (( rs = 1; rs < 3; rs++ )); do
-  echo "Intializing replica ${rs} set"
-  replicate="cfg = rs.conf(); cfg.members[0].host = \"mongors${rs}n1\"; rs.reconfig(cfg); rs.add(\"mongors${rs}n2\"); rs.add(\"mongors${rs}n3\"); rs.status();"
-  docker-compose -H :9999 exec mongors1n1 bash -c "echo '${replicate}' | mongo  -u siteRootAdmin -p password --authenticationDatabase admin"
-done
+echo "Intializing replica rs set"
+replicate="cfg = rs.conf(); cfg.members[0].host = \"mongors1n1\"; rs.reconfig(cfg); rs.add(\"mongors1n2\"); rs.add(\"mongors1n3\"); rs.status();"
+docker-compose -H :9999 exec mongors1n1 bash -c "echo '${replicate}' | mongo  -u siteRootAdmin -p password --authenticationDatabase admin"
