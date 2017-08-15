@@ -1,0 +1,54 @@
+version: '3'
+
+volumes:
+  mongors1n1:
+    driver: "${VOLUME_DRIVER}"
+  mongors1n2:
+    driver: "${VOLUME_DRIVER}"
+  mongors1n3:
+    driver: "${VOLUME_DRIVER}"
+networks:
+  mongo-network:
+services:
+  mongors1n1:
+    container_name: mongors1n1
+    image: xingjiudong/mongo 
+    restart: always 
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-network
+    volumes:
+      - mongors1n1:/data/db
+    environment:
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1} 
+      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config} 
+    command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
+  mongors1n2:
+    container_name: mongors1n2
+    image: xingjiudong/mongo
+    restart: always 
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-network
+    volumes:
+      - mongors1n2:/data/db
+    environment:
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1}
+      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config}
+    command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
+  mongors1n3:
+    container_name: mongors1n3
+    image: xingjiudong/mongo
+    restart: always 
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-network
+    volumes:
+      - mongors1n3:/data/db
+    environment:
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1}
+      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config}
+    command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
