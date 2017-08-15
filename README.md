@@ -1,5 +1,5 @@
 # Create Mongo-Cluster
-./create-mongodb.sh
+sudo ./create-mongodb.sh
 
 # Initiate Mongo-Cluster
 ./initiate 
