@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 
 volumes:
   mongors1n1:
@@ -21,9 +21,9 @@ services:
     volumes:
       - mongors1n1:/data/db
     environment:
-      constraint:volume.driver: =${VOLUME_DRIVER}
-      ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1} 
-      CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config} 
+      - volume.driver:=${VOLUME_DRIVER}
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1} 
+      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config} 
     command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
   mongors1n2:
     container_name: mongors1n2
@@ -36,9 +36,9 @@ services:
     volumes:
       - mongors1n2:/data/db
     environment:
-      constraint:volume.driver: =${VOLUME_DRIVER} 
-      ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
-      CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config}
+      - volume.driver:=${VOLUME_DRIVER}
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1}
+      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config}
     command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
   mongors1n3:
     container_name: mongors1n3
@@ -51,7 +51,7 @@ services:
     volumes:
       - mongors1n3:/data/db
     environment:
-      constraint:volume.driver:=${VOLUME_DRIVER} 
-      ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
-      CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config}
+      - volume.driver:=${VOLUME_DRIVER} 
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1}
+      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config}
     command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
