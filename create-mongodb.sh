@@ -14,6 +14,6 @@ sudo chmod 600 ${KEYFILE}
 sudo chown 999 ${KEYFILE}
 
 #Create Etcd For Mongo
-etcdctl set ${CLUSTER_PATH:-/mongo-config}/mongodb-keyfile < ${KEYFILE}
+/opt/bin/etcdctl set ${CLUSTER_PATH:-/mongo-config}/mongodb-keyfile < ${KEYFILE}
 
 docker-compose ${COMPOSE_OPT} up -d
