@@ -12,7 +12,7 @@ networks:
 services:
   mongors1n1:
     container_name: mongors1n1
-    image: xingjiudong/mongo 
+    image: xingjiudong/mongo:${MONGO_VERSION}
     restart: always 
     ports:
       - "27017:27017"
@@ -26,7 +26,7 @@ services:
     command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
   mongors1n2:
     container_name: mongors1n2
-    image: xingjiudong/mongo
+    image: xingjiudong/mongo:${MONGO_VERSION}
     restart: always 
     ports:
       - "27017:27017"
@@ -40,7 +40,7 @@ services:
     command: mongod --replSet mongors1 --smallfiles --dbpath /data/db --keyFile /etc/keyfile/mongodb-keyfile
   mongors1n3:
     container_name: mongors1n3
-    image: xingjiudong/mongo
+    image: xingjiudong/mongo:${MONGO_VERSION}
     restart: always 
     ports:
       - "27017:27017"
