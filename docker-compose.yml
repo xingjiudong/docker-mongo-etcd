@@ -21,13 +21,13 @@ services:
     volumes:
       - mongors1n1:/data/db
     environment:
-      - volume.driver:=${VOLUME_DRIVER}
-      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1} 
-      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config} 
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - REPLSET_NAME=${REPLSET_NAME}
-      - KEYFILE_PATH=${KEYFILE_PATH}
+       constraint:volume.driver: =${VOLUME_DRIVER}
+       ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
+       CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config}
+       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+       REPLSET_NAME: ${REPLSET_NAME}
+       KEYFILE_PATH: ${KEYFILE_PATH}
   mongors1n2:
     container_name: mongors1n2
     image: xingjiudong/mongo:${MONGO_VERSION}
@@ -39,13 +39,13 @@ services:
     volumes:
       - mongors1n2:/data/db
     environment:
-      - volume.driver:=${VOLUME_DRIVER}
-      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1}
-      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config}
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - REPLSET_NAME=${REPLSET_NAME}
-      - KEYFILE_PATH=${KEYFILE_PATH}
+       constraint:volume.driver: =${VOLUME_DRIVER}
+       ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
+       CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config}
+       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+       REPLSET_NAME: ${REPLSET_NAME}
+       KEYFILE_PATH: ${KEYFILE_PATH}
   mongors1n3:
     container_name: mongors1n3
     image: xingjiudong/mongo:${MONGO_VERSION}
@@ -57,10 +57,10 @@ services:
     volumes:
       - mongors1n3:/data/db
     environment:
-      - volume.driver:=${VOLUME_DRIVER} 
-      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP:-127.0.0.1}
-      - CLUSTER_PATH=${CLUSTER_PATH:-/mongo-config}
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - REPLSET_NAME=${REPLSET_NAME}
-      - KEYFILE_PATH=${KEYFILE_PATH}
+       constraint:volume.driver: =${VOLUME_DRIVER}
+       ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
+       CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config}
+       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+       REPLSET_NAME: ${REPLSET_NAME}
+       KEYFILE_PATH: ${KEYFILE_PATH}
