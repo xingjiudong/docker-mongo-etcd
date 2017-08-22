@@ -12,4 +12,4 @@ sudo chmod 600 ${KEYFILE_PATH}/mongodb-keyfile
 sudo chown 999 ${KEYFILE_PATH}/mongodb-keyfile
 
 #Create Etcd For Mongo
-/opt/bin/etcdctl set ${CLUSTER_PATH:-/mongo-config}/mongodb-keyfile < ${KEYFILE_PATH}/mongodb-keyfile
+etcdctl set ${CLUSTER_PATH:-/mongo-config}/mongodb-keyfile < ${KEYFILE_PATH}/mongodb-keyfile
