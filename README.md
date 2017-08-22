@@ -1,5 +1,8 @@
+# Create keyfile
+sudo ./keyfile.sh
+
 # Create Mongo-Cluster
-sudo ./create-mongodb.sh
+./create-mongodb.sh
 
 # Initiate Mongo-Cluster
-./initiate 
+./initiate.sh 
