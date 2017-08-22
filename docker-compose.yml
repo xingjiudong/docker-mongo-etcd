@@ -1,17 +1,16 @@
 version: '2.1'
 
 volumes:
-  mongors1n1:
+  rs0node1:
     driver: "${VOLUME_DRIVER}"
-  mongors1n2:
+  rs0node2:
     driver: "${VOLUME_DRIVER}"
-  mongors1n3:
+  rs0node3:
     driver: "${VOLUME_DRIVER}"
 networks:
   mongo-network:
 services:
-  mongors1n1:
-    container_name: mongors1n1
+  rs0node1:
     image: xingjiudong/mongo:${MONGO_VERSION}
     restart: always 
     ports:
@@ -19,7 +18,7 @@ services:
     networks:
       - mongo-network
     volumes:
-      - mongors1n1:/data/db
+      - rs0node1:/data/db
     environment:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
@@ -27,9 +26,7 @@ services:
        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
-       KEYFILE_PATH: ${KEYFILE_PATH}
-  mongors1n2:
-    container_name: mongors1n2
+  rs0node2:
     image: xingjiudong/mongo:${MONGO_VERSION}
     restart: always 
     ports:
@@ -37,7 +34,7 @@ services:
     networks:
       - mongo-network
     volumes:
-      - mongors1n2:/data/db
+      - rs0node2:/data/db
     environment:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
@@ -45,9 +42,7 @@ services:
        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
-       KEYFILE_PATH: ${KEYFILE_PATH}
-  mongors1n3:
-    container_name: mongors1n3
+  rs0node3:
     image: xingjiudong/mongo:${MONGO_VERSION}
     restart: always 
     ports:
@@ -55,7 +50,7 @@ services:
     networks:
       - mongo-network
     volumes:
-      - mongors1n3:/data/db
+      - rs0node3:/data/db
     environment:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
@@ -63,4 +58,3 @@ services:
        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
-       KEYFILE_PATH: ${KEYFILE_PATH}
