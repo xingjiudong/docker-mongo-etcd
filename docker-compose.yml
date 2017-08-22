@@ -12,9 +12,11 @@ networks:
 services:
   rs0node1:
     image: xingjiudong/mongo:${MONGO_VERSION}
-    restart: always 
+    restart: unless-stopped 
+    logging:
+      driver: "journald"
     ports:
-      - "27017:27017"
+      - "27017"
     networks:
       - mongo-network
     volumes:
@@ -28,9 +30,11 @@ services:
        REPLSET_NAME: ${REPLSET_NAME}
   rs0node2:
     image: xingjiudong/mongo:${MONGO_VERSION}
-    restart: always 
+    restart: unless-stopped
+    logging:
+      driver: "journald" 
     ports:
-      - "27017:27017"
+      - "27017"
     networks:
       - mongo-network
     volumes:
@@ -44,9 +48,11 @@ services:
        REPLSET_NAME: ${REPLSET_NAME}
   rs0node3:
     image: xingjiudong/mongo:${MONGO_VERSION}
-    restart: always 
+    restart: unless-stopped
+    logging:
+      driver: "journald" 
     ports:
-      - "27017:27017"
+      - "27017"
     networks:
       - mongo-network
     volumes:
