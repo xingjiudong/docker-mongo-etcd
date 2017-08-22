@@ -11,8 +11,6 @@ RUN	apt-get update && apt-get install -y --no-install-recommends wget && rm -rf 
         && mv etcd-${ETCD_VERSION}-linux-amd64/etcdctl /usr/local/bin/etcdctl \
         && rm -rf etcd-${ETCD_VERSION}-linux-amd64
 
-COPY ./docker-entrypoint.sh /usr/local/bin/
-RUN ln -s -f  usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY ./setup.sh /
 
-CMD ["mongod"]
+CMD ["/setup.sh"]
