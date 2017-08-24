@@ -22,6 +22,7 @@ services:
     volumes:
       - rs0node1:/data/db
     environment:
+       constraint:node: =debian_docker07
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
        CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config}
@@ -64,3 +65,15 @@ services:
        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
+  haproxy00:
+    image: xingjiudong/haproxy
+    restart: unless-stopped
+#    logging:
+#      driver: "journald"
+    networks:
+     - mongo-network
+    ports:
+     - "27017:27017"
+    environment:
+      constraint:node: =${HAPROXY_NODE}
+      MONGO_PRIMARY: ${MONGO_PRIMARY}
