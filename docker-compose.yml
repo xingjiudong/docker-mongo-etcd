@@ -22,7 +22,6 @@ services:
     volumes:
       - rs0node1:/data/db
     environment:
-       constraint:node: =debian_docker07
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP:-127.0.0.1}
        CLUSTER_PATH: ${CLUSTER_PATH:-/mongo-config}
