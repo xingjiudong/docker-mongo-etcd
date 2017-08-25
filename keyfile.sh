@@ -2,14 +2,12 @@
 set -e
 
 #Env Information
-CLUSTER_PATH=$1
-: ${KEYFILE_PATH:=/etc/keyfile}
+REPLSET_NAME=$1
 
-#Created Mongodb_Keyfile
-sudo mkdir -p ${KEYFILE_PATH} 
-sudo openssl rand -base64 741 > ${KEYFILE_PATH}/mongodb-keyfile
-sudo chmod 600 ${KEYFILE_PATH}/mongodb-keyfile 
-sudo chown 999 ${KEYFILE_PATH}/mongodb-keyfile
+#Created Mongodb-Keyfile
+openssl rand -base64 741 > /mongodb-keyfile
+chmod 600 /mongodb-keyfile 
+chown 999 /mongodb-keyfile
 
 #Create Etcd For Mongo
-etcdctl set ${CLUSTER_PATH:-/mongo-config/rs0}/mongodb-keyfile < ${KEYFILE_PATH}/mongodb-keyfile
+etcdctl set /mongo-config/mongodb-keyfile/${REPLSET_NAME:-rs0} < /mongodb-keyfile
