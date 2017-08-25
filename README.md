@@ -1,8 +1,15 @@
-# Create keyfile
+# How to
+
+1. Create keyfile for mongo
 sudo ./keyfile.sh
 
-# Create Mongo-Cluster
-./create-mongodb.sh
+2. Create Mongo-Cluster and haproxy
+./create-mongodb.sh 
 
-# Initiate Mongo-Cluster
+3. Initiate Mongo-Cluster
 ./initiate.sh 
+
+4.Connect Mongo with client
+default:
+siteRootAdmin@${HAPROXY_NODE}:27017
+
