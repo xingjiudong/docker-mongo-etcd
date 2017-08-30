@@ -1,11 +1,17 @@
 version: '2.1'
 
 volumes:
-  rs0node1:
+  rs0node1db:
     driver: "${VOLUME_DRIVER}"
-  rs0node2:
+  rs0node1configdb:
     driver: "${VOLUME_DRIVER}"
-  rs0node3:
+  rs0node2db:
+    driver: "${VOLUME_DRIVER}"
+  rs0node2configdb:
+    driver: "${VOLUME_DRIVER}"
+  rs0node3db:
+    driver: "${VOLUME_DRIVER}"
+  rs0node3configdb:
     driver: "${VOLUME_DRIVER}"
 networks:
   mongo-network:
@@ -20,13 +26,15 @@ services:
     networks:
       - mongo-network
     volumes:
-      - rs0node1:/data/db
+      - rs0node1db:/data/db
+      - rs0node1configdb:/data/configdb
     environment:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
+    command:  --replSet ${REPLSET_NAME} --smallfiles --keyFile /mongodb-keyfile
   rs0node2:
     image: xingjiudong/mongo:${MONGO_VERSION}
     restart: unless-stopped
@@ -37,13 +45,13 @@ services:
     networks:
       - mongo-network
     volumes:
-      - rs0node2:/data/db
+      - rs0node2db:/data/db
+      - rs0node2configdb:/data/configdb
     environment:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
+    command: --replSet ${REPLSET_NAME} --smallfiles --keyFile /mongodb-keyfile 
   rs0node3:
     image: xingjiudong/mongo:${MONGO_VERSION}
     restart: unless-stopped
@@ -54,13 +62,13 @@ services:
     networks:
       - mongo-network
     volumes:
-      - rs0node3:/data/db
+      - rs0node3db:/data/db
+      - rs0node3configdb:/data/configdb
     environment:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
+    command: --replSet ${REPLSET_NAME} --smallfiles --keyFile /mongodb-keyfile
   haproxy00:
     image: xingjiudong/haproxy
     restart: unless-stopped
