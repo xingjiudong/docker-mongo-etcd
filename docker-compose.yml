@@ -76,6 +76,10 @@ services:
      - mongo-network
     ports:
      - "27017:27017"
+    depends_on:
+     - "rs0node1"
+     - "rs0node2"
+     - "rs0node3"
     environment:
       constraint:node: =${HAPROXY_NODE}
       MONGO_PRIMARY: ${MONGO_PRIMARY}
