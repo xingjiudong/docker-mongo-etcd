@@ -31,10 +31,8 @@ services:
     environment:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
        REPLSET_NAME: ${REPLSET_NAME}
-    command:  --replSet ${REPLSET_NAME} --smallfiles --keyFile /mongodb-keyfile
+    command:  --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
   rs0node2:
     image: xingjiudong/mongo:${MONGO_VERSION}
     restart: unless-stopped
@@ -51,7 +49,7 @@ services:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
        REPLSET_NAME: ${REPLSET_NAME}
-    command: --replSet ${REPLSET_NAME} --smallfiles --keyFile /mongodb-keyfile 
+    command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile 
   rs0node3:
     image: xingjiudong/mongo:${MONGO_VERSION}
     restart: unless-stopped
@@ -68,9 +66,9 @@ services:
        constraint:volume.driver: =${VOLUME_DRIVER}
        ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
        REPLSET_NAME: ${REPLSET_NAME}
-    command: --replSet ${REPLSET_NAME} --smallfiles --keyFile /mongodb-keyfile
+    command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
   haproxy00:
-    image: xingjiudong/haproxy
+    image: xingjiudong/haproxy:${HAPROXY_VERSION}
     restart: unless-stopped
     logging:
       driver: "journald"

@@ -15,4 +15,3 @@ RUN	apt-get update && apt-get install -y --no-install-recommends wget && rm -rf 
 COPY ./etcd-entrypoint.sh  /
 ENTRYPOINT ["/etcd-entrypoint.sh"]
 
-CMD ["mongod"]
