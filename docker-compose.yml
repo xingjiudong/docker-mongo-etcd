@@ -21,6 +21,8 @@ services:
     restart: unless-stopped 
     logging:
       driver: "journald"
+    dns:
+      - ${DNS_SERVER}
     ports:
       - "27017"
     networks:
@@ -38,6 +40,8 @@ services:
     restart: unless-stopped
     logging:
       driver: "journald" 
+    dns:
+      - ${DNS_SERVER}
     ports:
       - "27017"
     networks:
@@ -55,6 +59,8 @@ services:
     restart: unless-stopped
     logging:
       driver: "journald" 
+    dns:
+      - ${DNS_SERVER}
     ports:
       - "27017"
     networks:
@@ -82,4 +88,6 @@ services:
      - "rs0node3"
     environment:
       constraint:node: =${HAPROXY_NODE}
+      ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
+      SERVICE: ${SERVICE}
       MONGO_PRIMARY: ${MONGO_PRIMARY}
