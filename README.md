@@ -16,3 +16,5 @@ sudo ./keyfile.sh
 
 siteRootAdmin@${HAPROXY_NODE}:27017
 
+# about set-primary
+
