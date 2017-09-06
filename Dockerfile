@@ -1,4 +1,4 @@
-FROM mongo:3.4
+FROM mongo:latest
 
 MAINTAINER xjd <25635680@qq.com>
 
