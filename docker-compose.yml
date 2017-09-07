@@ -74,7 +74,7 @@ services:
        REPLSET_NAME: ${REPLSET_NAME}
     command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
   haproxy00:
-    image: xingjiudong/haproxy:${HAPROXY_VERSION}
+    image: xingjiudong/haproxy-etcd:${HAPROXY_VERSION}
     restart: unless-stopped
     logging:
       driver: "journald"
@@ -89,5 +89,5 @@ services:
     environment:
       constraint:node: =${HAPROXY_NODE}
       ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-      SERVICE: ${SERVICE}
+      PROJECT_NAME: ${PROJECT_NAME}
       MONGO_PRIMARY: ${MONGO_PRIMARY}
