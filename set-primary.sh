@@ -8,4 +8,4 @@ PRIMARY_NODE=` docker-compose ${COMPOSE_OPT} $@ exec rs0node1 bash -c \
          | grep rs0` 
 
 #Set etcd for mongodb replset primary node;
-etcdctl set etcdctl set haproxy-config/${PROJECT_NAME}/mongo/backend/mongo-1 ${PRIMARY_NODE}
+etcdctl set haproxy-config/${PROJECT_NAME}/mongo/backend/mongo-1 ${PRIMARY_NODE}
