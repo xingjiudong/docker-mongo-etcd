@@ -1,6 +1,6 @@
 # HOW TO
 
-- 1. Create keyfile for mongo
+# 1. Create keyfile for mongo
 
 sudo ./keyfile.sh
 
