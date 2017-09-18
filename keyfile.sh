@@ -1,8 +1,7 @@
 #!/bin/bash
 set -e
 
-#Env Information
-REPLSET_NAME=$1
+source ./env.config
 
 #Created Mongodb-Keyfile
 openssl rand -base64 741 > ./mongodb-keyfile
