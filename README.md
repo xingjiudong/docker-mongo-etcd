@@ -6,7 +6,7 @@ sudo ./keyfile.sh
 
 # 2.Create Mongo-Cluster and haproxy
 
-./create-mongodb.sh
+./mongo.sh up -d
 
 # 3. Initiate Mongo-Cluster
 
