@@ -17,7 +17,7 @@ networks:
   mongo-network:
 services:
   rs0node1:
-    image: xingjiudong/mongo:${MONGO_VERSION}
+    image: openfrontier/mongo:${MONGO_VERSION}
     restart: unless-stopped 
     logging:
       driver: "journald"
@@ -36,7 +36,7 @@ services:
        REPLSET_NAME: ${REPLSET_NAME}
     command:  --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
   rs0node2:
-    image: xingjiudong/mongo:${MONGO_VERSION}
+    image: openfrontier/mongo:${MONGO_VERSION}
     restart: unless-stopped
     logging:
       driver: "journald" 
@@ -55,7 +55,7 @@ services:
        REPLSET_NAME: ${REPLSET_NAME}
     command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile 
   rs0node3:
-    image: xingjiudong/mongo:${MONGO_VERSION}
+    image: openfrontier/mongo:${MONGO_VERSION}
     restart: unless-stopped
     logging:
       driver: "journald" 
@@ -74,7 +74,7 @@ services:
        REPLSET_NAME: ${REPLSET_NAME}
     command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
   haproxy00:
-    image: xingjiudong/haproxy-etcd:${HAPROXY_VERSION}
+    image: openfrontier/haproxy-etcd:${HAPROXY_VERSION}
     restart: unless-stopped
     logging:
       driver: "journald"
