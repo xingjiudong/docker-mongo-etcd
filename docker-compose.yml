@@ -19,6 +19,7 @@ services:
   mongo1:
     image: openfrontier/mongo:${MONGO_VERSION}
     restart: unless-stopped 
+    mem_limit: 1024M
     logging:
       driver: "journald"
     dns:
@@ -31,9 +32,10 @@ services:
       - mongo1-db:/data/db
       - mongo1-config:/data/configdb
     environment:
-       constraint:volume.driver: =${VOLUME_DRIVER}
-       ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-       REPLSET_NAME: ${REPLSET_NAME}
+      - affinity:container!=*mongo*
+      - constraint:volume.driver==${VOLUME_DRIVER}
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
+      - REPLSET_NAME=${REPLSET_NAME}
     command:  --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
   mongo2:
     image: openfrontier/mongo:${MONGO_VERSION}
@@ -50,9 +52,10 @@ services:
       - mongo2-db:/data/db
       - mongo2-config:/data/configdb
     environment:
-       constraint:volume.driver: =${VOLUME_DRIVER}
-       ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-       REPLSET_NAME: ${REPLSET_NAME}
+      - affinity:container!=*mongo*
+      - constraint:volume.driver==${VOLUME_DRIVER}
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
+      - REPLSET_NAME=${REPLSET_NAME}
     command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile 
   mongo3:
     image: openfrontier/mongo:${MONGO_VERSION}
@@ -69,9 +72,10 @@ services:
       - mongo3-db:/data/db
       - mongo3-config:/data/configdb
     environment:
-       constraint:volume.driver: =${VOLUME_DRIVER}
-       ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-       REPLSET_NAME: ${REPLSET_NAME}
+      - affinity:container!=*mongo*
+      - constraint:volume.driver==${VOLUME_DRIVER}
+      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
+      - REPLSET_NAME=${REPLSET_NAME}
     command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
   mongo-haproxy:
     image: openfrontier/haproxy-etcd:${HAPROXY_VERSION}
@@ -89,6 +93,6 @@ services:
      - "mongo2"
      - "mongo3"
     environment:
-      constraint:node: =${HAPROXY_NODE}
-      ETCD_CLIENT_IP: ${ETCD_CLIENT_IP}
-      PROJECT_NAME: ${COMPOSE_PROJECT_NAME}
+     - constraint:node==${HAPROXY_NODE}
+     - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
+     - PROJECT_NAME=${PROJECT_NAME}
