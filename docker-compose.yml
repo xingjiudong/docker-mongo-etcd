@@ -19,7 +19,9 @@ services:
   mongo1:
     image: openfrontier/mongo:${MONGO_VERSION}
     restart: unless-stopped 
-    mem_limit: 1024M
+    cpu_quota: 90000
+    mem_limit: 3000M
+    memswap_limit: -1
     logging:
       driver: "journald"
     dns:
@@ -40,6 +42,9 @@ services:
   mongo2:
     image: openfrontier/mongo:${MONGO_VERSION}
     restart: unless-stopped
+    cpu_quota: 90000
+    mem_limit: 3000M
+    memswap_limit: -1
     logging:
       driver: "journald" 
     dns:
@@ -60,6 +65,9 @@ services:
   mongo3:
     image: openfrontier/mongo:${MONGO_VERSION}
     restart: unless-stopped
+    cpu_quota: 90000
+    mem_limit: 3000M
+    memswap_limit: -1
     logging:
       driver: "journald" 
     dns:
