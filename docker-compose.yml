@@ -26,6 +26,7 @@ services:
       - mongos-db:/data/db
       - mongos-config:/data/configdb
     environment:
+      - affinity:container!=*mongo*
       - constraint:volume.driver==${VOLUME_DRIVER}
     command: --auth 
   mongos-haproxy:
