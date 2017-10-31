@@ -1,23 +1,15 @@
 version: '2.1'
 
 volumes:
-  mongo1-db:
+  mongos-db:
     driver: "${VOLUME_DRIVER}"
-  mongo1-config:
-    driver: "${VOLUME_DRIVER}"
-  mongo2-db:
-    driver: "${VOLUME_DRIVER}"
-  mongo2-config:
-    driver: "${VOLUME_DRIVER}"
-  mongo3-db:
-    driver: "${VOLUME_DRIVER}"
-  mongo3-config:
+  mongos-config:
     driver: "${VOLUME_DRIVER}"
 networks:
-  mongo-network:
+  mongos-network:
 services:
-  mongo1:
-    image: openfrontier/mongo:${MONGO_VERSION}
+  mongos:
+    image: mongo:${MONGO_VERSION}
     restart: unless-stopped 
     cpu_quota: 90000
     mem_limit: 3000M
@@ -29,63 +21,13 @@ services:
     ports:
       - "27017"
     networks:
-      - mongo-network
+      - mongos-network
     volumes:
-      - mongo1-db:/data/db
-      - mongo1-config:/data/configdb
+      - mongos-db:/data/db
+      - mongos-config:/data/configdb
     environment:
-      - affinity:container!=*mongo*
       - constraint:volume.driver==${VOLUME_DRIVER}
-      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
-      - REPLSET_NAME=${REPLSET_NAME}
-    command:  --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
-  mongo2:
-    image: openfrontier/mongo:${MONGO_VERSION}
-    restart: unless-stopped
-    cpu_quota: 90000
-    mem_limit: 3000M
-    memswap_limit: -1
-    logging:
-      driver: "journald" 
-    dns:
-      - ${DNS_SERVER}
-    ports:
-      - "27017"
-    networks:
-      - mongo-network
-    volumes:
-      - mongo2-db:/data/db
-      - mongo2-config:/data/configdb
-    environment:
-      - affinity:container!=*mongo*
-      - constraint:volume.driver==${VOLUME_DRIVER}
-      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
-      - REPLSET_NAME=${REPLSET_NAME}
-    command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile 
-  mongo3:
-    image: openfrontier/mongo:${MONGO_VERSION}
-    restart: unless-stopped
-    cpu_quota: 90000
-    mem_limit: 3000M
-    memswap_limit: -1
-    logging:
-      driver: "journald" 
-    dns:
-      - ${DNS_SERVER}
-    ports:
-      - "27017"
-    networks:
-      - mongo-network
-    volumes:
-      - mongo3-db:/data/db
-      - mongo3-config:/data/configdb
-    environment:
-      - affinity:container!=*mongo*
-      - constraint:volume.driver==${VOLUME_DRIVER}
-      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
-      - REPLSET_NAME=${REPLSET_NAME}
-    command: --replSet ${REPLSET_NAME} --keyFile /mongodb-keyfile
-  mongo-haproxy:
+  mongos-haproxy:
     image: openfrontier/haproxy-etcd:${HAPROXY_VERSION}
     restart: unless-stopped
     logging:
@@ -93,14 +35,12 @@ services:
     dns:
      - ${DNS_SERVER}
     networks:
-     - mongo-network
+     - mongos-network
     ports:
      - "27017:27017"
      - "8000:8000"
     depends_on:
-     - "mongo1"
-     - "mongo2"
-     - "mongo3"
+     - "mongos"
     environment:
      - constraint:node==${HAPROXY_NODE}
      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
