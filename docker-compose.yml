@@ -96,6 +96,7 @@ services:
      - mongo-network
     ports:
      - "27017:27017"
+     - "8000:8000"
     depends_on:
      - "mongo1"
      - "mongo2"
@@ -107,3 +108,4 @@ services:
      - TIMEOUT_CONNECT=${TIMEOUT_CONNECT}
      - TIMEOUT_CLIENT=${TIMEOUT_CLIENT}
      - TIMEOUT_SERVER=${TIMEOUT_SERVER}
+     - MAXCONN=${MAXCONN}
