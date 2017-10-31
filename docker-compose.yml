@@ -27,6 +27,7 @@ services:
       - mongos-config:/data/configdb
     environment:
       - constraint:volume.driver==${VOLUME_DRIVER}
+    command: --auth 
   mongos-haproxy:
     image: openfrontier/haproxy-etcd:${HAPROXY_VERSION}
     restart: unless-stopped
