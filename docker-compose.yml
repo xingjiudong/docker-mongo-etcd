@@ -1,35 +1,35 @@
 version: '2.1'
 
 volumes:
-  mongos-db:
+  mongo-db:
     driver: "${VOLUME_DRIVER}"
-  mongos-config:
+  mongo-config:
     driver: "${VOLUME_DRIVER}"
 networks:
-  mongos-network:
+  mongo-network:
 services:
-  mongos:
+  mongo:
     image: mongo:${MONGO_VERSION}
     restart: unless-stopped 
-    cpu_quota: 90000
-    mem_limit: 3000M
-    memswap_limit: -1
+    cpu_quota: ${CPU_QUOTA} 
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEMSWAP_LIMIT}
     logging:
       driver: "journald"
     dns:
-      - ${DNS_SERVER}
+     - ${DNS_SERVER}
     ports:
-      - "27017"
+     - "27017"
     networks:
-      - mongos-network
+     - mongo-network
     volumes:
-      - mongos-db:/data/db
-      - mongos-config:/data/configdb
+     - mongo-db:/data/db
+     - mongo-config:/data/configdb
     environment:
-      - affinity:container!=*mongo*
-      - constraint:volume.driver==${VOLUME_DRIVER}
+     - affinity:container!=*mongo*
+     - constraint:volume.driver==${VOLUME_DRIVER}
     command: --auth 
-  mongos-haproxy:
+  mongo-haproxy:
     image: openfrontier/haproxy-etcd:${HAPROXY_VERSION}
     restart: unless-stopped
     logging:
@@ -37,12 +37,12 @@ services:
     dns:
      - ${DNS_SERVER}
     networks:
-     - mongos-network
+     - mongo-network
     ports:
      - "27017:27017"
      - "8000:8000"
     depends_on:
-     - "mongos"
+     - "mongo"
     environment:
      - constraint:node==${HAPROXY_NODE}
      - ETCD_CLIENT_IP=${ETCD_CLIENT_IP}
@@ -50,4 +50,5 @@ services:
      - TIMEOUT_CONNECT=${TIMEOUT_CONNECT}
      - TIMEOUT_CLIENT=${TIMEOUT_CLIENT}
      - TIMEOUT_SERVER=${TIMEOUT_SERVER}
+     - TIMEOUT_HTTP_KEEP_ALIVE=${TIMEOUT_HTTP_KEEP_ALIVE}
      - MAXCONN=${MAXCONN}
